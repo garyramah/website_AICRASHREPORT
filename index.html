@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Crash Report // When an AI System Fails, File the Report</title>
+<meta name="description" content="Software has had crash reports for decades. AI systems fail differently: they don't segfault, they act. A concept note on what a crash report for an AI system should contain.">
+<style>
+  :root{
+    --bg:#0a0a0a; --panel:#101010; --line:#232323;
+    --text:#b5b5b5; --bright:#f2f2f2; --dim:#6f6f6f;
+    --accent:#f5b942; --accent-dim:#5a4416;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    --mono:"SF Mono",Menlo,Consolas,"Courier New",monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.65;padding:0 1.5rem 3rem}
+  .wrap{max-width:1020px;margin:0 auto}
+  header{border-bottom:1px solid var(--line);padding:1.6rem 0;display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;flex-wrap:wrap}
+  .wordmark{font-family:var(--mono);font-size:1.6rem;font-weight:700;letter-spacing:.1em;color:var(--bright)}
+  .wordmark span{color:var(--accent)}
+  .tagline{font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin-top:.2rem}
+  .badge{font-family:var(--mono);font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);border:1px solid var(--accent-dim);padding:.4rem .7rem;white-space:nowrap}
+  .hero{padding:4.5rem 0 3rem;max-width:760px}
+  .eyebrow{font-family:var(--mono);font-size:.8rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:1.2rem}
+  h1{color:var(--bright);font-size:clamp(2.2rem,5vw,3.6rem);line-height:1.1;letter-spacing:-.02em;margin-bottom:1.4rem}
+  .lead{font-size:1.15rem;max-width:680px}
+  .lead b{color:var(--bright)}
+  h2{color:var(--bright);font-size:1rem;letter-spacing:.14em;text-transform:uppercase;margin:3.5rem 0 1.2rem;padding-bottom:.6rem;border-bottom:1px solid var(--line)}
+  .grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem}
+  @media(max-width:760px){.grid2{grid-template-columns:1fr}}
+  .card{background:var(--panel);border:1px solid var(--line);padding:1.4rem}
+  .card h3{color:var(--bright);font-size:.95rem;margin-bottom:.5rem}
+  .card p{font-size:.92rem}
+  .card.hot{border-color:var(--accent-dim)}
+  .card.hot h3{color:var(--accent)}
+  .step{display:flex;gap:1rem;background:var(--panel);border:1px solid var(--line);padding:1.4rem;margin-bottom:1rem}
+  .num{font-family:var(--mono);color:var(--accent);font-size:1.1rem;flex-shrink:0}
+  .step h3{color:var(--bright);font-size:.95rem;margin-bottom:.3rem}
+  .step p{font-size:.92rem}
+  .callout{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--accent);padding:1.6rem}
+  .callout p{font-size:.98rem;margin-bottom:.8rem}
+  .callout p:last-child{margin-bottom:0}
+  .callout b{color:var(--bright)}
+  footer{margin-top:4rem;border-top:1px solid var(--line);padding-top:1.2rem;font-family:var(--mono);font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div>
+      <div class="wordmark">AI <span>CRASH</span> REPORT</div>
+      <div class="tagline">Incident reporting for AI systems</div>
+    </div>
+    <div class="badge">Concept note</div>
+  </header>
+
+  <section class="hero">
+    <p class="eyebrow">Software crashes. AI acts.</p>
+    <h1>When an AI system crashes, the report matters more than the crash.</h1>
+    <p class="lead">Software has had crash reports for decades: a stack trace, repro steps, a severity. AI systems fail differently. They don&rsquo;t segfault — <b>they act</b>: wrongly, excessively, irreversibly. And when they do, the report is usually a narrative written after the fact, by someone reconstructing what happened from memory. This page sketches what a crash report for an AI system should actually contain.</p>
+  </section>
+
+  <h2>How AI crashes</h2>
+  <div class="grid2">
+    <div class="card">
+      <h3>Exceeded authority</h3>
+      <p>The agent did something it was never permitted to do. Formal authority said no; effective authority — what it could actually reach by composing its tools — said yes. The gap between the two is the crash.</p>
+    </div>
+    <div class="card">
+      <h3>Wrong target, right permission</h3>
+      <p>The permission was real and the action was authorized — but the object was wrong. A chain of individually legitimate steps composed into a destination nobody approved. The chain was the credential.</p>
+    </div>
+    <div class="card">
+      <h3>Irreversible first action</h3>
+      <p>The first consequential step could not be undone, and there was no window to stop it: no timelock, no veto, no way back. The failure wasn&rsquo;t the decision. It was the absence of a correction mechanism.</p>
+    </div>
+    <div class="card">
+      <h3>Silent drift</h3>
+      <p>No single action was wrong. Approvals were granted for uninspected actions, one after another, until the system&rsquo;s mandate had quietly moved. A sketchy workaround, compressed into history, became an authorized directive. Nothing crashed. Everything drifted.</p>
+    </div>
+  </div>
+
+  <h2>Anatomy of the report</h2>
+  <p style="max-width:760px;margin-bottom:1rem">A crash report for an AI system is not a story. It is five checkable claims — each one verifiable against a record, not a recollection:</p>
+  <div class="step">
+    <div class="num">01</div>
+    <div>
+      <h3>What was authorized</h3>
+      <p>The envelope at the time: the permissions, budgets, and time-boxed leases in force when the action was taken. Not what the agent was <i>supposed</i> to do — what it was <i>allowed</i> to do.</p>
+    </div>
+  </div>
+  <div class="step">
+    <div class="num">02</div>
+    <div>
+      <h3>What was attempted</h3>
+      <p>The action itself: the tool, the target, the payload, the exact invocation. No summaries. The record should be precise enough to replay.</p>
+    </div>
+  </div>
+  <div class="step">
+    <div class="num">03</div>
+    <div>
+      <h3>What actually happened</h3>
+      <p>The consequence, and whether it was reversible. A report that cannot say what changed — and whether it can be undone — is not a report.</p>
+    </div>
+  </div>
+  <div class="step">
+    <div class="num">04</div>
+    <div>
+      <h3>Where it crossed</h3>
+      <p>Which boundary failed, or which boundary was absent. Every AI crash is an authority story: name the crossing, and the fix becomes visible.</p>
+    </div>
+  </div>
+  <div class="step">
+    <div class="num">05</div>
+    <div>
+      <h3>The ledger entry</h3>
+      <p>The record that survives the system it records. If the crash report lives inside the system that crashed, it is evidence held by the suspect. The ledger must outlive the failure.</p>
+    </div>
+  </div>
+
+  <h2>Why narrative isn&rsquo;t enough</h2>
+  <div class="callout">
+    <p>Today&rsquo;s AI incident reports are prose: paragraphs written days later, summarizing what someone believes happened. Prose can&rsquo;t be queried, compared across incidents, or enforced against. A structured crash report turns each failure into something checkable — <b>this permission, this action, this consequence</b> — so the next deployment can be constrained by the last one&rsquo;s failure, not just warned by it.</p>
+    <p>Regulators are already moving this way: serious-incident reporting for high-risk AI systems is becoming an obligation, not a courtesy. The organizations that can already produce a structured crash report will be the ones that can answer when asked. The ones that can&rsquo;t will be writing prose under pressure.</p>
+  </div>
+
+  <h2>The report is the envelope&rsquo;s memory</h2>
+  <div class="callout">
+    <p>A system that cannot produce a crash report cannot be governed. The report is how a failure in one deployment becomes a constraint in the next — how the envelope learns. Without it, every crash is a first crash.</p>
+    <p><b>A crash you can&rsquo;t reconstruct is a crash you&rsquo;ll repeat.</b></p>
+  </div>
+
+  <footer>
+    <span>AI Crash Report · A concept note</span>
+    <span>Not a product claim</span>
+  </footer>
+
+</div>
+</body>
+</html>
